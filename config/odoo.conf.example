@@ -1,0 +1,7 @@
+[options]
+addons_path = /home/ubuntu/odoo/odoo19/odoo/addons,/home/ubuntu/odoo/respect-odoo19/custom_addons
+db_host = False
+db_port = False
+db_user = Data_Base_User
+admin_password = Defualt_Password 
+http_port = Port
