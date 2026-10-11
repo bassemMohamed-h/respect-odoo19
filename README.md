@@ -1,1 +1,1 @@
-# REspect Odoo 19 - custom addons & config
+# Respect Odoo 19 - custom addons & config
