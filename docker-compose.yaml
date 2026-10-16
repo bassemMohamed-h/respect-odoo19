@@ -1,0 +1,53 @@
+services:
+  odoodb:
+    image: postgres:16
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgresql_password
+    secrets:
+      - postgresql_password
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    restart: always
+
+  pgadmin:
+    image: dpage/pgadmin4:9.18
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PG_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    volumes:
+      - pg-data:/var/lib/pgadmin
+    restart: always
+    ports:
+      - "127.0.0.1:5050:80"
+    depends_on:
+      - odoodb
+
+  odoo:
+    image: odoo:19
+    environment:
+      - HOST=odoodb
+      - USER=${DB_USER}
+      - PASSWORD_FILE=/run/secrets/postgresql_password
+    secrets:
+      - postgresql_password
+    volumes:
+      - odoo-data:/var/lib/odoo
+      - ./config/odoo.conf:/etc/odoo/odoo.conf:z
+      - ./custom_addons:/mnt/odoo/custom_addons:z
+      - ./third_party:/mnt/odoo/third_party:z
+    depends_on:
+      - odoodb
+    ports:
+      - "127.0.0.1:8069:8069"
+    restart: always
+
+volumes:
+  db-data:
+  pg-data:
+  odoo-data:
+
+secrets:
+  postgresql_password:
+    file: ./secrets/postgresql_password.txt

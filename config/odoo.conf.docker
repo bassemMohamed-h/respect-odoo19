@@ -1,0 +1,5 @@
+// server setup [docker]
+[options]
+addons_path = /mnt/odoo/third_party/odoomates
+admin_passwd = change_me
+proxy_mode = True
