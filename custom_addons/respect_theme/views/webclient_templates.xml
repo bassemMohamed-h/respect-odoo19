@@ -1,0 +1,8 @@
+<odoo>
+    <template id="respect_favicon" inherit_id="web.layout">
+        <xpath expr="//link[@rel='shortcut icon']" position="attributes">
+            <attribute name="t-att-href">x_icon or '/respect_theme/static/img/favicon.ico'</attribute>
+
+        </xpath>
+    </template>
+</odoo>
